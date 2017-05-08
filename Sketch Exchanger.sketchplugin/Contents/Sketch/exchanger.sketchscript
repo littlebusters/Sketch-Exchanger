@@ -1,0 +1,54 @@
+function exchanger(context) {
+	log('-> Running Plugin --------------------------------------------');
+	var doc = context.document;
+
+	var json2sketch = 'json-to-sketch.sh';
+	var sketch2json = 'sketch-to-json.sh';
+
+	var openDialog = NSOpenPanel.openPanel();
+	openDialog.setCanChooseFiles(true);
+	openDialog.setCanChooseDirectories(true);
+	openDialog.setAllowsMultipleSelection(false);
+	openDialog.setCanCreateDirectories(false);
+	openDialog.setTitle('Choose .sketch or unziped folder...');
+
+	var fileTypes = ['sketch'];
+	var openPanelButtonPressed = openDialog.runModalForDirectory_file_types_( nil, nil, fileTypes );
+
+	if ( openPanelButtonPressed == NSFileHandlingPanelOKButton ) {
+		var filePath = openDialog.URL().path();
+		log('-> Open File or Directory from: ' + filePath);
+		
+		if(-1 != filePath.indexOf('.sketch')) {
+			log('-> is Sketch File');
+
+			filePath = filePath.replace('.sketch', '');
+			var shellFile = context.plugin.urlForResourceNamed(sketch2json).path();
+			log('-> Shell File: ' + shellFile);
+
+			runCommand('/bin/bash', [shellFile, filePath]);
+		} else {
+			log('-> is Directory');
+
+			var shellFile = context.plugin.urlForResourceNamed(json2sketch).path();
+			log('-> Shell File: ' + shellFile);
+
+			runCommand('/bin/bash', [shellFile, filePath]);
+			runCommand('/usr/bin/open', [filePath + '.sketch']);
+		}
+	} else {
+		log('Canceled.')
+	}
+
+}
+
+function runCommand(command, args) {
+	var task = NSTask.new();
+	task.setLaunchPath(command);
+	log('-> setLaunchPath' + command);
+	task.setArguments(args);
+	log('-> setArguments' + task.arguments());
+	task.launch();
+	task.waitUntilExit();
+	return (task.terminationStatus() == 0);
+}
