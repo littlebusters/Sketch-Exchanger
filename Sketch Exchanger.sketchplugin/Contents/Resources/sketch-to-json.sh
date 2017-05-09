@@ -10,6 +10,6 @@ fileData="${fileName}.sketch"
 
 if [ -f ${fileData} ]; then
   unzip ${fileData} -d ${fileName}
-  find . -name '*.json' -exec sh -c 'cat {} | jq -r . > {}.1 && mv {}.1 {}' \;
+  find . -name '*.json' -exec sh -c 'cat {} | jq -rS . > {}.1 && mv {}.1 {}' \;
   rm -rf ${fileName}/__MACOSX ${fileName}/.DS_Store
 fi
