@@ -24,20 +24,18 @@ function exchanger(context) {
 
 			filePath = filePath.replace('.sketch', '');
 			var shellFile = context.plugin.urlForResourceNamed(sketch2json).path();
-			log('-> Shell File: ' + shellFile);
 
 			runCommand('/bin/bash', [shellFile, filePath]);
 		} else {
 			log('-> is Directory');
 
 			var shellFile = context.plugin.urlForResourceNamed(json2sketch).path();
-			log('-> Shell File: ' + shellFile);
 
 			runCommand('/bin/bash', [shellFile, filePath]);
 			runCommand('/usr/bin/open', [filePath + '.sketch']);
 		}
 	} else {
-		log('Canceled.')
+		log('Canceled.');
 	}
 
 }
@@ -45,9 +43,7 @@ function exchanger(context) {
 function runCommand(command, args) {
 	var task = NSTask.new();
 	task.setLaunchPath(command);
-	log('-> setLaunchPath' + command);
 	task.setArguments(args);
-	log('-> setArguments' + task.arguments());
 	task.launch();
 	task.waitUntilExit();
 	return (task.terminationStatus() == 0);
