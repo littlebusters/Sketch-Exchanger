@@ -10,10 +10,10 @@ function exchanger(context) {
 	openDialog.setCanChooseDirectories(true);
 	openDialog.setAllowsMultipleSelection(false);
 	openDialog.setCanCreateDirectories(false);
-	openDialog.setTitle('Choose .sketch or unziped folder...');
+	openDialog.setMessage('Choose `.sketch` or unziped folder...');
 
 	var fileTypes = ['sketch'];
-	var openPanelButtonPressed = openDialog.runModalForDirectory_file_types_( nil, nil, fileTypes );
+	var openPanelButtonPressed = openDialog.runModalForDirectory_file_types_(nil, nil, fileTypes);
 
 	if ( openPanelButtonPressed == NSFileHandlingPanelOKButton ) {
 		var filePath = openDialog.URL().path();
