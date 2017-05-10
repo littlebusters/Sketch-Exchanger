@@ -15,29 +15,53 @@ function exchanger(context) {
 	var fileTypes = ['sketch'];
 	var openPanelButtonPressed = openDialog.runModalForDirectory_file_types_(nil, nil, fileTypes);
 
-	if ( openPanelButtonPressed == NSFileHandlingPanelOKButton ) {
+	if (openPanelButtonPressed == NSFileHandlingPanelOKButton) {
 		var filePath = openDialog.URL().path();
 		log('-> Open File or Directory from: ' + filePath);
-		
-		if(-1 != filePath.indexOf('.sketch')) {
-			log('-> is Sketch File');
 
-			filePath = filePath.replace('.sketch', '');
-			var shellFile = context.plugin.urlForResourceNamed(sketch2json).path();
-
-			runCommand('/bin/bash', [shellFile, filePath]);
-			doc.showMessage('🔌Exchanger: ⭕️Converted from the Sketch to configuration files!');
+		if (-1 < filePath.indexOf('.sketch')) {
+			log('-> Select Sketch File.')
+			var isSketchFile    = true;
+			var shellFile       = context.plugin.urlForResourceNamed(sketch2json).path();
+			var notificationMsg = '🔌Exchanger: 😃Converted from the Sketch to configuration files!';
+			var alertMsg        = 'Directory Exists.';
 		} else {
-			log('-> is Directory');
-
-			var shellFile = context.plugin.urlForResourceNamed(json2sketch).path();
-
-			runCommand('/bin/bash', [shellFile, filePath]);
-			doc.showMessage('🔌Exchanger: ⭕️from configuration files to the Sketch! The file is open...');
-			runCommand('/usr/bin/open', [filePath + '.sketch']);
+			log('-> Select Directory.')
+			var isSketchFile    = false;
+			var shellFile       = context.plugin.urlForResourceNamed(json2sketch).path();
+			var notificationMsg = '🔌Exchanger: 😃Converted from configuration files to the Sketch! The file is open...';
+			var alertMsg        = 'Sketch File Exists.';
 		}
+
+		var fileManager = NSFileManager.defaultManager();
+		var extension   = '';
+		if (isSketchFile) {
+			filePath = filePath.replace('.sketch', '');			
+		} else {
+			extension = '.sketch';
+		}
+		var responseCode = 1000;
+		if (fileManager.fileExistsAtPath(filePath + extension)) {
+			responseCode = showAlert(alertMsg);
+		}
+
+		if (1000 == responseCode) {
+			runCommand('/bin/bash', [shellFile, filePath]);
+			doc.showMessage(notificationMsg);
+
+			if (!isSketchFile) {
+				runCommand('/usr/bin/open', [filePath + extension]);
+			}
+			return true;
+
+		} else {
+			doc.showMessage('🔌Exchanger: ⛔️Cancelled.');
+			return false;
+		}
+
 	} else {
-		doc.showMessage('🔌Exchanger: ⛔️Canceled.');
+		doc.showMessage('🔌Exchanger: ⛔️Cancelled.');
+		return false;
 	}
 
 }
@@ -49,4 +73,15 @@ function runCommand(command, args) {
 	task.launch();
 	task.waitUntilExit();
 	return (task.terminationStatus() == 0);
+}
+
+function showAlert(msg) {
+	var alert = NSAlert.new();
+	alert.setMessageText(msg);
+	alert.setInformativeText('Do you want to overwrite?');
+	alert.addButtonWithTitle('OK');
+	alert.addButtonWithTitle('Cancel');
+	var responseCode = alert.runModal();
+
+	return responseCode;
 }
