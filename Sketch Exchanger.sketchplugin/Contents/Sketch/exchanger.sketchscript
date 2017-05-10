@@ -26,16 +26,18 @@ function exchanger(context) {
 			var shellFile = context.plugin.urlForResourceNamed(sketch2json).path();
 
 			runCommand('/bin/bash', [shellFile, filePath]);
+			doc.showMessage('🔌Exchanger: ⭕️Converted from the Sketch to configuration files!');
 		} else {
 			log('-> is Directory');
 
 			var shellFile = context.plugin.urlForResourceNamed(json2sketch).path();
 
 			runCommand('/bin/bash', [shellFile, filePath]);
+			doc.showMessage('🔌Exchanger: ⭕️from configuration files to the Sketch! The file is open...');
 			runCommand('/usr/bin/open', [filePath + '.sketch']);
 		}
 	} else {
-		log('Canceled.');
+		doc.showMessage('🔌Exchanger: ⛔️Canceled.');
 	}
 
 }
