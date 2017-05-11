@@ -36,7 +36,7 @@ brew install jq
 
 ## 使い方
 
-:warning: **JSONの整形に[jq](https://stedolan.github.io/jq/)** を使います。まずは[jq](https://stedolan.github.io/jq/)** をインストールしてください！** :warning:
+:warning: **JSONの整形に[jq](https://stedolan.github.io/jq/)を使います。まずは[jq](https://stedolan.github.io/jq/)をインストールしてください！** :warning:
 
 ```
 brew install jq
