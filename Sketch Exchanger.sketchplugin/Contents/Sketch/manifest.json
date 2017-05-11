@@ -1,5 +1,11 @@
 {
+    "name" : "Exchanger",
+    "description" : "Convert from Sketch to JSON w/assets and JSON w/assets to Sketch.",
     "author": "littlebusters",
+    "version": "1.0.0",
+    "identifier": "net.creative-tweet.exchanger",
+    "compatibleVersion": 43,
+    "bundleVersion": 1,
     "commands" : [
         {
             "name": "Exchanger",
@@ -16,9 +22,5 @@
             "exchanger"
         ],
         "title" : "Exchanger"
-    },
-    "identifier": "net.creative-tweet.exchanger",
-    "version": "0.1.0",
-    "description" : "Sketch to JSON and JSON to Sketch.",
-    "name" : "Exchanger"
+    }
 }
