@@ -2,10 +2,11 @@
     "name" : "Exchanger",
     "description" : "Convert from Sketch to JSON w/assets and JSON w/assets to Sketch.",
     "author": "littlebusters",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "identifier": "net.creative-tweet.exchanger",
     "compatibleVersion": 43,
     "bundleVersion": 1,
+    "appcast": "https://raw.githubusercontent.com/littlebusters/Sketch-Exchanger/master/Sketch%20Exchanger.sketchplugin/Contents/Resources/update.xml",
     "commands" : [
         {
             "name": "Exchanger",
