@@ -6,16 +6,16 @@
     <description>Convert from Sketch to JSON w/assets and JSON w/assets to Sketch.</description>
     <language>en</language>
       <item>
-        <title>Version 1.1.0</title>
+        <title>Version 1.1.1</title>
         <description>
           <![CDATA[
             <ul>
-              <li>Supports Sketch Runner</li>
+              <li>Fix bug</li>
             </ul>
           ]]>
         </description>
-        <pubDate>Tue, 13 Jun 2017 23:30:00 +0900</pubDate>
-        <enclosure url="https://github.com/littlebusters/Sketch-Exchanger/archive/master.zip" sparkle:version="1.1.0" length="68114" type="application/octet-stream" />
+        <pubDate>Wed, 17 Jan 2018 19:30:00 +0900</pubDate>
+        <enclosure url="https://github.com/littlebusters/Sketch-Exchanger/archive/master.zip" sparkle:version="1.1.1" length="68114" type="application/octet-stream" />
       </item>
   </channel>
 </rss>

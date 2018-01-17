@@ -7,6 +7,6 @@ fi
 
 directoryName=$1
 
-if [ -d ${directoryName} ]; then
-  cd ${directoryName} && zip -o ${directoryName}.sketch -r *
+if [ -d "${directoryName}" ]; then
+  cd "${directoryName}" && zip -o "${directoryName}.sketch" -r *
 fi
